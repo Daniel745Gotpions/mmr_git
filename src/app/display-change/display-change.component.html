@@ -1,0 +1,47 @@
+<a routerLink="/">Back To List >></a>
+<div class="row">
+  <div class="col-lg-12">
+    <p class="mini-title mt-4">Change Details</p>
+    <div class="cube">
+
+      <div class="row">
+        <div class="col-lg-2" style="font-size: 20px;padding-top: 25px; vertical-align: middle;text-align: left">
+          <label >Change ID :</label>
+          <span class="font-weight-bold">{{changeId}}</span>
+        </div>
+        <div class="col-lg-2">
+          <form >
+            <div class="form-group">
+                <label>Status:</label>
+                <select class="form-control" >
+                  <option value="Open">Open</option>
+                  <option value="Open">Done</option>
+                  <option value="Open">Canceled</option>
+                </select>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <p class="mini-title mt-4">Marge Requests</p>
+    <div class="cube">
+      <span *ngIf="showList ; else loggedOut">
+        <div class="line" *ngFor="let item of margeRequests"  >
+          <a href="{{ item.fullUrl}}" target="_blank">{{item.fullUrl}}</a>
+        </div>
+      </span>
+      <ng-template #loggedOut>
+        Not  Found Requests
+      </ng-template>
+    </div>
+  </div>
+</div>
+
+<iframe *ngIf="iframeUel" [src]='getIframe()' width="640" height="360" frameborder="0"
+        webkitallowfullscreen mozallowfullscreen allowfullscreen>
+</iframe>

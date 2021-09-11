@@ -1,0 +1,16 @@
+.line{
+  padding: 10px;
+  border-bottom:1px solid #ddd;
+}
+
+.mini-title{
+  font-weight: bold;
+  padding-right: 10px;
+  color: #0a0a0a;
+  border-bottom: 1px solid;
+}
+.cube{
+  padding: 20px;
+  border:1px solid #ddd;
+  border-radius: 5px;
+}

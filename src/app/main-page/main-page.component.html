@@ -1,0 +1,46 @@
+
+<div class="filter-container">
+
+  <div class="row">
+    <div class="col-lg-2">
+      <span class="filter-title">Changes</span>
+    </div>
+    <div class="col-10 col-lg-10">
+      <form>
+        <div class="form-row">
+          <div class="col-md-4 mb-4"></div>
+          <div class="col-md-4 mb-4 text-right"></div>
+          <div class="col-md-4 mb-4 text-right">
+            <a routerLink="/create-change" class="btn-success btn">Create</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+
+      <input type="text" class="form-control" [(ngModel)]="searchFilter"  placeholder="Search" name="name">
+
+      <table datatable  class="row-border hover" >
+        <thead>
+        <tr>
+          <th (click)="sort('statusDescription')">Change Name <i class="fa fa-sort"></i> </th>
+          <th (click)="sort('statusDescription')">Project Name <i class="fa fa-sort"></i></th>
+          <th (click)="sort('statusDescription')">Status <i class="fa fa-sort"></i></th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of itemList  | orderBy:key | filter:searchFilter  | paginate:{itemsPerPage:5,currentPage:pageNumber};">
+            <td> <a routerLink="display-change/{{item.changeId }}">{{item.description}}</a></td>
+            <td>{{item.projectName}}</td>
+            <td>{{item.statusDescription}}</td>
+          </tr>
+        </tbody>
+        <pagination-controls (pageChange)="pageNumber = $event"> </pagination-controls>
+      </table>
+    </div>
+  </div>
+</div>
+<p>main-page works!</p>
