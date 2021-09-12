@@ -1,6 +1,6 @@
 
 <div class="filter-container">
-
+  <i class="bi bi-star-fill"></i>
   <div class="row">
     <div class="col-lg-2">
       <span class="filter-title">Changes</span>
@@ -31,6 +31,7 @@
           <th>Change Name <i class="fa fa-sort"></i> </th>
           <th>Project Name <i class="fa fa-sort"></i></th>
           <th>Status <i class="fa fa-sort"></i></th>
+          <th>Action <i class="fa fa-sort"></i></th>
         </tr>
         </thead>
         <tbody>
@@ -39,6 +40,7 @@
             <td> <a routerLink="display-change/{{item.changeId }}">{{item.description}}</a></td>
             <td>{{item.projectName}}</td>
             <td>{{item.statusDescription}}</td>
+            <td><i class="bi bi-trash"></i></td>
           </tr>
         </tbody>
       </table>
