@@ -6,3 +6,7 @@
 .dataTables_wrapper .dataTables_filter input{
   background: #FFFFFF !important;
 }
+
+div#DataTables_Table_0_length select {
+  background: #ffffff;
+}

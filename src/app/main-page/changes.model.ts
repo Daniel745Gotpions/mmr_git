@@ -1,12 +1,12 @@
 export class Changes {
-  public changeId : number;
-  public description: string;
-  public projectId: number;
-  public statusId:number;
-  public statusDescription:string;
-  public projectName:string;
-  public createdAt:string;
-  public updatedAt:string;
+  public changeId : number = null;
+  public description: string = null;
+  public projectId: number = null;
+  public statusId:number = null;
+  public statusDescription:string = null;
+  public projectName:string = null;
+  public createdAt:string = null;
+  public updatedAt:string = null;
 
     constructor(changeId:number,description:string,projectId:number,statusId:number,statusDescription:string,projectName:string,createdAt:string,updatedAt:string) {
       this.changeId = changeId;

@@ -13,6 +13,7 @@ export class ChangesLogicService {
   constructor(private http: HttpClient) { }
 
   apiUrl = "https://bi-new.mellanox.com/mmrServer";
+
   getItems() {
     return this.http.get(this.apiUrl+'/getChangeList.php');
   }
@@ -24,5 +25,9 @@ export class ChangesLogicService {
 
   getProjectList(){
     return this.http.get(this.apiUrl+'/getProjectList.php' );
+  }
+
+  addChange(jsonData){
+    return this.http.post<any>(this.apiUrl+'/putNewChange.php',jsonData);
   }
 }

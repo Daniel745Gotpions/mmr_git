@@ -17,10 +17,11 @@ import { HttpClient } from '@angular/common/http';
 export class MainPageComponent implements OnInit {
 
   dtOptions: DataTables.Settings = {};
-
+  dtTrigger: Subject<any> = new Subject<any>();
   itemList:Changes[] = [];
   projectList = [];
-  dtTrigger: Subject<any> = new Subject<any>();
+
+
   constructor(private changesLogicService:ChangesLogicService,private fb: FormBuilder,private http:HttpClient) {}
 
   myForm = this.fb.group({
@@ -43,6 +44,7 @@ export class MainPageComponent implements OnInit {
 
     this.http.get<Changes[]>('https://bi-new.mellanox.com/mmrServer/getChangeList.php')
       .subscribe((data:any[]) => {
+
         if (data.length) {
           for (let i = 0; i < data.length; i++) {
 
@@ -79,7 +81,10 @@ export class MainPageComponent implements OnInit {
     if (!this.myForm.valid) {
       return false;
     } else {
-      alert(JSON.stringify(this.myForm.value));
+        this.changesLogicService.addChange(JSON.stringify(this.myForm.value)).subscribe((data)=>{
+
+              debugger;
+        });
     }
 
   }
