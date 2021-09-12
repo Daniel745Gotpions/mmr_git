@@ -23,6 +23,6 @@ export class ChangesLogicService {
   }
 
   getProjectList(){
-    return this.http.post<any>(this.apiUrl+'/getProjectList.php', { title: 'Angular POST Request Example' });
+    return this.http.get(this.apiUrl+'/getProjectList.php' );
   }
 }

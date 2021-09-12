@@ -5,6 +5,7 @@ import {Changes} from "./changes.model";
 import { Subject } from 'rxjs';
 import { FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-main-page',
@@ -15,12 +16,12 @@ import { Validators } from '@angular/forms';
 
 export class MainPageComponent implements OnInit {
 
+  dtOptions: DataTables.Settings = {};
+
   itemList:Changes[] = [];
   projectList = [];
-  searchFilter:string = '';
-  pageNumber:number = 1;
-
-  constructor(private changesLogicService:ChangesLogicService,private fb: FormBuilder) {}
+  dtTrigger: Subject<any> = new Subject<any>();
+  constructor(private changesLogicService:ChangesLogicService,private fb: FormBuilder,private http:HttpClient) {}
 
   myForm = this.fb.group({
     changeName: ['',Validators.required],
@@ -35,45 +36,46 @@ export class MainPageComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.changesLogicService.getItems().subscribe((data :any[])=>{
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 25
+    };
 
-      if (data.length) {
-        for (let i = 0; i < data.length; i++) {
+    this.http.get<Changes[]>('https://bi-new.mellanox.com/mmrServer/getChangeList.php')
+      .subscribe((data:any[]) => {
+        if (data.length) {
+          for (let i = 0; i < data.length; i++) {
 
-          this.itemList.push( new Changes(
-            data[i].mm_changes_id,
-            data[i].mm_desc,
-            data[i].mm_project_id,
-            data[i].mm_states_id,
-            data[i].mm_state.mm_states_name,
-            data[i].mm_project.mm_project_name,
-            data[i].createdAt,
-            data[i].updatedAt,
-          ));
+            this.itemList.push( new Changes(
+              data[i].mm_changes_id,
+              data[i].mm_desc,
+              data[i].mm_project_id,
+              data[i].mm_states_id,
+              data[i].mm_state.mm_states_name,
+              data[i].mm_project.mm_project_name,
+              data[i].createdAt,
+              data[i].updatedAt,
+            ));
 
+          }
         }
-      }
-    });
+        // Calling the DT trigger to manually render the table
+        this.dtTrigger.next();
+      });
 
     this.changesLogicService.getProjectList().subscribe((response:any[])=>{
-        debugger;
+        this.projectList = response;
     });
 
   }
-  openPopUp(){
-    debugger
-  }
 
-  key:string = 'description';
-  reverse:boolean = true;
-
-  sort(sortIdentifier){
-    this.key = sortIdentifier;
-    this.reverse = !this.reverse;
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    this.dtTrigger.unsubscribe();
   }
 
   onSubmit(){
-    
+
     if (!this.myForm.valid) {
       return false;
     } else {

@@ -1,4 +1,0 @@
-/* You can add global styles to this file, and also import other style files */
-.dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_processing, .dataTables_wrapper .dataTables_paginate {
-  display: none !important;
-}

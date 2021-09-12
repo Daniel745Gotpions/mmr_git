@@ -24,24 +24,21 @@
   <div class="row">
     <div class="col-lg-12">
 
-      <input type="text" class="form-control" [(ngModel)]="searchFilter"  placeholder="Search" name="name">
-
-      <table datatable  class="row-border hover" >
+      <table datatable  [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover" >
         <thead>
         <tr>
-          <th (click)="sort('statusDescription')">Change Name <i class="fa fa-sort"></i> </th>
-          <th (click)="sort('statusDescription')">Project Name <i class="fa fa-sort"></i></th>
-          <th (click)="sort('statusDescription')">Status <i class="fa fa-sort"></i></th>
+          <th>Change Name <i class="fa fa-sort"></i> </th>
+          <th>Project Name <i class="fa fa-sort"></i></th>
+          <th>Status <i class="fa fa-sort"></i></th>
         </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of itemList  | orderBy:key | filter:searchFilter  | paginate:{itemsPerPage:5,currentPage:pageNumber};">
+          <tr *ngFor="let item of itemList">
             <td> <a routerLink="display-change/{{item.changeId }}">{{item.description}}</a></td>
             <td>{{item.projectName}}</td>
             <td>{{item.statusDescription}}</td>
           </tr>
         </tbody>
-        <pagination-controls (pageChange)="pageNumber = $event"> </pagination-controls>
       </table>
     </div>
   </div>
@@ -67,14 +64,12 @@
             <div class="form-group">
               <label for="projectName">Project</label>
               <select class="form-control" id="projectName" formControlName="projectName" (change)="onChooseProject($event)">
-                <option value="">Select Project</option>
-                <option [ngValue]= "22">sds</option>
-                <option  [ngValue]= "v" *ngFor="let v of projectList" >test</option>
+                <option  value="">Select Project</option>
+                <option  value="{{v.mm_project_id}}"  *ngFor="let v of projectList" >{{v.mm_project_name}}</option>
               </select>
             </div>
 
         </div>
-
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <button type="submit" class="btn btn-primary" [disabled]="!myForm.valid">Save changes</button>
