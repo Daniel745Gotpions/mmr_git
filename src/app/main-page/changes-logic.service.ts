@@ -22,4 +22,7 @@ export class ChangesLogicService {
     return this.http.get(this.apiUrl+"/getMargeRequest.php?mm_changes_id="+changeId);
   }
 
+  getProjectList(){
+    return this.http.post<any>(this.apiUrl+'/getProjectList.php', { title: 'Angular POST Request Example' });
+  }
 }

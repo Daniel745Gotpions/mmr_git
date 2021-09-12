@@ -1,9 +1,10 @@
 import { Component, OnInit , ViewChild} from '@angular/core';
-
+import { FormGroup, FormControl } from '@angular/forms';
 import {ChangesLogicService} from  './changes-logic.service';
 import {Changes} from "./changes.model";
 import { Subject } from 'rxjs';
-
+import { FormBuilder } from '@angular/forms';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-main-page',
@@ -15,10 +16,22 @@ import { Subject } from 'rxjs';
 export class MainPageComponent implements OnInit {
 
   itemList:Changes[] = [];
+  projectList = [];
   searchFilter:string = '';
   pageNumber:number = 1;
 
-  constructor(private changesLogicService:ChangesLogicService) {}
+  constructor(private changesLogicService:ChangesLogicService,private fb: FormBuilder) {}
+
+  myForm = this.fb.group({
+    changeName: ['',Validators.required],
+    projectName:['', Validators.required]
+  });
+
+  onChooseProject(e){
+    this.myForm.get('projectName').setValue(e.target.value, {
+      onlySelf: true
+    });
+  }
 
   ngOnInit(): void {
 
@@ -41,16 +54,33 @@ export class MainPageComponent implements OnInit {
         }
       }
     });
+
+    this.changesLogicService.getProjectList().subscribe((response:any[])=>{
+        debugger;
+    });
+
+  }
+  openPopUp(){
+    debugger
   }
 
   key:string = 'description';
   reverse:boolean = true;
 
   sort(sortIdentifier){
-
     this.key = sortIdentifier;
     this.reverse = !this.reverse;
+  }
+
+  onSubmit(){
+    
+    if (!this.myForm.valid) {
+      return false;
+    } else {
+      alert(JSON.stringify(this.myForm.value));
+    }
 
   }
+
 
 }
