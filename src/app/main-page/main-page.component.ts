@@ -19,7 +19,7 @@ export class MainPageComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
   itemList:Changes[] = [];
-  projectList = [];
+  projectList = [{"mm_project_name":"Select Project","mm_project_id":""}];
 
 
   constructor(private changesLogicService:ChangesLogicService,private fb: FormBuilder,private http:HttpClient) {}
@@ -33,13 +33,15 @@ export class MainPageComponent implements OnInit {
     this.myForm.get('projectName').setValue(e.target.value, {
       onlySelf: true
     });
+
   }
+
 
   ngOnInit(): void {
 
     this.dtOptions = {
       pagingType: 'full_numbers',
-      pageLength: 25
+      pageLength: 10
     };
 
     this.http.get<Changes[]>('https://bi-new.mellanox.com/mmrServer/getChangeList.php')
@@ -66,7 +68,12 @@ export class MainPageComponent implements OnInit {
       });
 
     this.changesLogicService.getProjectList().subscribe((response:any[])=>{
-        this.projectList = response;
+        if(response.length){
+          for (let i = 0; i < response.length; i++) {
+            this.projectList.push( response[i]);
+          }
+        }
+
     });
 
   }
@@ -81,9 +88,28 @@ export class MainPageComponent implements OnInit {
     if (!this.myForm.valid) {
       return false;
     } else {
-        this.changesLogicService.addChange(JSON.stringify(this.myForm.value)).subscribe((data)=>{
 
-              debugger;
+        this.changesLogicService.addChange(JSON.stringify(this.myForm.value)).subscribe((data:any )=>{
+
+          this.itemList.push( new Changes(
+            data.mm_changes_id,
+            data.mm_desc,
+            data.mm_project_id,
+            data.mm_states_id,
+            '',
+            '',
+            data.createdAt,
+            data.updatedAt
+            /*data.mm_state.mm_states_name,
+            data.mm_project.mm_project_name,
+            data.createdAt,
+            data.updatedAt*/
+          ));
+
+          // Reset to default form
+          this.myForm.controls.projectName.patchValue(this.projectList[0].mm_project_id);
+          this.myForm.controls.changeName.patchValue('');
+          document.getElementById('exampleModal').click();
         });
     }
 

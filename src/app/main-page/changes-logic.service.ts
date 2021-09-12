@@ -18,7 +18,7 @@ export class ChangesLogicService {
     return this.http.get(this.apiUrl+'/getChangeList.php');
   }
 
-  getItemById(changeId){
+  getRequestByMargeId(changeId){
     changeId = parseInt(changeId);
     return this.http.get(this.apiUrl+"/getMargeRequest.php?mm_changes_id="+changeId);
   }

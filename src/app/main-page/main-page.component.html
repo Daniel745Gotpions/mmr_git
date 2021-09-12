@@ -64,7 +64,6 @@
             <div class="form-group">
               <label for="projectName">Project</label>
               <select class="form-control" id="projectName" formControlName="projectName" (change)="onChooseProject($event)">
-                <option  value="">Select Project</option>
                 <option  value="{{v.mm_project_id}}"  *ngFor="let v of projectList" >{{v.mm_project_name}}</option>
               </select>
             </div>
