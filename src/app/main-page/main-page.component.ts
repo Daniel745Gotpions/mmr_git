@@ -1,4 +1,4 @@
-import { Component, OnInit , ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import {ChangesLogicService} from  './changes-logic.service';
 import {Changes} from "./changes.model";
@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
 import { FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import {DataTableDirective} from 'angular-datatables';
 
 @Component({
   selector: 'app-main-page',
@@ -16,13 +17,14 @@ import { HttpClient } from '@angular/common/http';
 
 export class MainPageComponent implements OnInit {
 
+  @ViewChild(DataTableDirective) dtElement : DataTableDirective;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
   itemList:Changes[] = [];
   projectList = [{"mm_project_name":"Select Project","mm_project_id":""}];
 
 
-  constructor(private changesLogicService:ChangesLogicService,private fb: FormBuilder,private http:HttpClient) {}
+  constructor(private changesLogicService:ChangesLogicService,private fb: FormBuilder,private http:HttpClient,private chRef:ChangeDetectorRef) {}
 
   myForm = this.fb.group({
     changeName: ['',Validators.required],
@@ -63,6 +65,10 @@ export class MainPageComponent implements OnInit {
 
           }
         }
+
+        // Listen to any change
+        this.chRef.detectChanges();
+
         // Calling the DT trigger to manually render the table
         this.dtTrigger.next();
       });
@@ -110,10 +116,20 @@ export class MainPageComponent implements OnInit {
           this.myForm.controls.projectName.patchValue(this.projectList[0].mm_project_id);
           this.myForm.controls.changeName.patchValue('');
           document.getElementById('exampleModal').click();
+          // Render datatable with new inserted row
+          this.rerender();
         });
     }
 
   }
 
+  rerender(){
+    this.dtElement.dtInstance.then((dtInstance:DataTables.Api)=>{
+      // Destroy datatable
+      dtInstance.destroy();
+      // Call the datatable to render again
+      this.dtTrigger.next();
+    });
+  }
 
 }

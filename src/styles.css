@@ -1,0 +1,15 @@
+.dataTables_wrapper .dataTables_filter input{
+  background: #FFFFFF !important;
+}
+.dataTables_wrapper .dataTables_length select {
+  background: #ffffff !important;
+}
+
+.filter-container{
+  padding: 10px;
+  background: #f8f9fa;
+  -webkit-box-shadow: -1px 0px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: -1px 0px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: -1px 0px 5px 0px rgba(0,0,0,0.75);
+  margin-top: 20px;
+}
