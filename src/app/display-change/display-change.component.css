@@ -9,6 +9,7 @@
   color: #0a0a0a;
   border-bottom: 1px solid;
   font-size: 23px;
+  margin-top: 0px !important;
 }
 
 .cube{
@@ -16,4 +17,37 @@
   padding: 20px;
   border:1px solid #ddd;
   border-radius: 5px;
+}
+
+.jumbotron{
+  padding: 10px !important;
+  margin-bottom: 10px;
+}
+
+.filter-container{
+  margin-top: 10px;
+  padding: 0px;
+}
+
+.my-iframe{
+  width: 100%;
+  min-height: 700px;
+  border: 1px #cbcbcb solid;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+.demo-link-design{
+  position: relative;
+  top: -2px;
+  -webkit-box-shadow: -1px 0px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: -1px 0px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: -1px 0px 5px 0px rgba(0,0,0,0.75);
+}
+
+.scrollingDiv{
+  overflow: overlay;
+  width: 100%;
+  max-height: 165px;
+  padding: 15px;
 }

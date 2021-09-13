@@ -1,70 +1,72 @@
-<div class="filter-container">
+<div class="container">
+  <div class="filter-container">
+    <div class="row jumbotron">
+      <div class="col-lg-12">
+        <p class="mini-title mt-4">Change Details</p>
+        <div class="cube">
 
-  <div class="row jumbotron">
-    <div class="col-lg-12">
-      <p class="mini-title mt-4">Change Details</p>
-      <div class="cube">
+          <div class="row">
+            <div class="col-lg-2" style="font-size: 20px;padding-top: 25px; vertical-align: middle;text-align: left">
+              <label >Change ID :</label>
+              <span class="font-weight-bold">{{changeId}}</span>
+            </div>
+            <div class="col-lg-2">
+              <form>
+                <div class="form-group">
+                    <label>Status:</label>
+                    <select class="form-control" >
+                      <option value="1">Open</option>
+                      <option value="3">Done</option>
+                      <option value="2">Canceled</option>
+                    </select>
+                </div>
+              </form>
+            </div>
+            <div class="col-lg-5">
 
-        <div class="row">
-          <div class="col-lg-2" style="font-size: 20px;padding-top: 25px; vertical-align: middle;text-align: left">
-            <label >Change ID :</label>
-            <span class="font-weight-bold">{{changeId}}</span>
-          </div>
-          <div class="col-lg-2">
-            <form>
-              <div class="form-group">
-                  <label>Status:</label>
-                  <select class="form-control" >
-                    <option value="1">Open</option>
-                    <option value="3">Done</option>
-                    <option value="2">Canceled</option>
-                  </select>
-              </div>
-            </form>
-          </div>
-          <div class="col-lg-5">
-
-          </div>
-          <div class="col-lg-3">
-            <button type="button" class="btn box-shadow-input" style="margin-top: 30px;margin-right: 5px;" data-toggle="modal" data-target="#exampleModal">
-              Create Request <i class="bi bi-plus-lg" style="font-size: 14px;"></i>
-            </button>
-            <a routerLink="/" class="btn box-shadow-input" style="margin-top: 30px;"><i class="bi bi-arrow-return-left" ></i></a>
+            </div>
+            <div class="col-lg-3">
+              <button type="button" class="btn box-shadow-input" style="margin-top: 30px;margin-right: 5px;" data-toggle="modal" data-target="#exampleModal">
+                Create Request <i class="bi bi-plus-lg" style="font-size: 14px;"></i>
+              </button>
+              <a routerLink="/" class="btn box-shadow-input" style="margin-top: 30px;"><i class="bi bi-arrow-return-left" ></i></a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <div class="row ">
-    <div class="col-lg-12">
-      <p class="mini-title mt-4">Marge Requests</p>
-      <div class="cube">
-        <span *ngIf="showList ; else loggedOut">
-          <div class="row line"  *ngFor="let item of margeRequests">
-            <div class="col-lg-11">
-              <div class="custom-link" (click)="setIframe(item.fullUrl)">
-                {{ item.fullUrl}}
+      <div class="col-lg-12">
+        <p class="mini-title mt-4">Marge Requests</p>
+        <div class="cube">
+          <span *ngIf="showList ; else loggedOut">
+            <div class="scrollingDiv">
+              <div class="row line"  *ngFor="let item of margeRequests">
+                <div class="col-lg-10">
+                  <div class="custom-link" (click)="setIframe(item.fullUrl)">
+                    {{ item.fullUrl}}
+                  </div>
+                </div>
+                <div class="col-lg-2" style="text-align: right;">
+                  <button class="form-control trashButtonIcon" (click)="onDeleteRequestAlert(item.mm_mrs_id)" style="margin: initial;display: inline-block;margin-right: 5px;"><i class="bi bi-trash"></i></button>
+                  <a href="{{ item.fullUrl}}" title="Direct Link" target="_blank" class="btn btn-primary demo-link-design"><i class="bi bi-link"></i></a>
+                </div>
               </div>
-              <!--<a href="{{ item.fullUrl}}" target="_blank">{{item.fullUrl}}</a>-->
-
             </div>
-            <div class="col-lg-1">
-              <button class="form-control trashButtonIcon" (click)="onDeleteRequestAlert(item.mm_mrs_id)"><i class="bi bi-trash"></i></button>
-            </div>
-          </div>
-        </span>
-        <ng-template #loggedOut>
-          Requests Not Found
-        </ng-template>
+          </span>
+          <ng-template #loggedOut>
+            Requests Not Found
+          </ng-template>
+        </div>
       </div>
+
     </div>
   </div>
+</div>
 
+<div style="margin: auto;width: 98%">
   <iframe *ngIf="iframeUel" [src]='iframeUel' class="my-iframe" frameborder="0"
           webkitallowfullscreen mozallowfullscreen allowfullscreen>
   </iframe>
-
 </div>
 
 <!-- Modal -->

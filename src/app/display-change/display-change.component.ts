@@ -15,6 +15,7 @@ import {HttpClient} from "@angular/common/http";
 export class DisplayChangeComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private changesLogicService:ChangesLogicService, public sanitizer: DomSanitizer,private fb: FormBuilder,private http:HttpClient) { }
+
   requestId:number;
   changeId:number;
   changeStatus:number;
@@ -83,7 +84,6 @@ export class DisplayChangeComponent implements OnInit {
   }
 
   setIframe(url){
-    //https://gitlab-master.nvidia.com/nbu-sws/p4/nv_p4compiler/-/merge_requests/618
     this.iframeUel = this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 

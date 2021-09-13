@@ -1,50 +1,51 @@
+<div class="container">
+  <div class="filter-container">
 
-<div class="filter-container">
+    <div class="row jumbotron">
 
-  <div class="row jumbotron">
+      <div class="col-lg-2">
+        <span class="filter-title">Changes</span>
+      </div>
 
-    <div class="col-lg-2">
-      <span class="filter-title">Changes</span>
-    </div>
-
-    <div class="col-10 col-lg-10">
-      <form>
-        <div class="form-row">
-          <div class="col-md-4 mb-4"></div>
-          <div class="col-md-4 mb-4 text-right"></div>
-          <div class="col-md-4 mb-4 text-right">
-            <button type="button" class="btn box-shadow-input" data-toggle="modal" data-target="#exampleModal">
-              Create <i class="bi bi-plus-lg" style="font-size: 14px;"></i>
-            </button>
+      <div class="col-10 col-lg-10">
+        <form>
+          <div class="form-row">
+            <div class="col-md-4 mb-4"></div>
+            <div class="col-md-4 mb-4 text-right"></div>
+            <div class="col-md-4 mb-4 text-right">
+              <button type="button" class="btn box-shadow-input" data-toggle="modal" data-target="#exampleModal">
+                Create <i class="bi bi-plus-lg" style="font-size: 14px;"></i>
+              </button>
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-lg-12">
-      <table datatable  [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover" id="main-table" >
-        <thead>
-        <tr>
-          <th>Change ID <i class="fa fa-sort"></i> </th>
-          <th>Description <i class="fa fa-sort"></i> </th>
-          <th>Project Name <i class="fa fa-sort"></i></th>
-          <th>Status <i class="fa fa-sort"></i></th>
-          <th>Action <i class="fa fa-sort"></i></th>
-        </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of itemList">
-            <td>{{item.changeId}}</td>
-            <td> <a routerLink="display-change/{{item.changeId }}">{{item.description}}</a></td>
-            <td>{{item.projectName}}</td>
-            <td>{{item.statusDescription}}</td>
-            <td>
-              <button (click)="deleteChangeAlert(item.changeId)" class="form-control trashButtonIcon"><i class="bi bi-trash"></i></button>
+    <div class="row">
+      <div class="col-lg-12">
+        <table datatable  [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover" id="main-table" >
+          <thead>
+          <tr>
+            <th>Change ID <i class="fa fa-sort"></i> </th>
+            <th>Description <i class="fa fa-sort"></i> </th>
+            <th>Project Name <i class="fa fa-sort"></i></th>
+            <th>Status <i class="fa fa-sort"></i></th>
+            <th>Action <i class="fa fa-sort"></i></th>
           </tr>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of itemList">
+              <td>{{item.changeId}}</td>
+              <td> <a routerLink="display-change/{{item.changeId }}">{{item.description}}</a></td>
+              <td>{{item.projectName}}</td>
+              <td>{{item.statusDescription}}</td>
+              <td>
+                <button (click)="deleteChangeAlert(item.changeId)" class="form-control trashButtonIcon"><i class="bi bi-trash"></i></button>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
@@ -61,17 +62,17 @@
       </div>
       <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
         <div class="modal-body">
+          <div class="form-group">
+            <label for="projectName">Project</label>
+            <select class="form-control" id="projectName" formControlName="projectName" (change)="onChooseProject($event)">
+              <option  value="{{v.mm_project_id}}"  *ngFor="let v of projectList" >{{v.mm_project_name}}</option>
+            </select>
+          </div>
 
-            <div class="form-group">
-              <label for="changeName">Change Name</label>
-              <input type="text"  formControlName="changeName" class="form-control" id="changeName" >
-            </div>
-            <div class="form-group">
-              <label for="projectName">Project</label>
-              <select class="form-control" id="projectName" formControlName="projectName" (change)="onChooseProject($event)">
-                <option  value="{{v.mm_project_id}}"  *ngFor="let v of projectList" >{{v.mm_project_name}}</option>
-              </select>
-            </div>
+          <div class="form-group">
+            <label for="changeName">Description</label>
+            <input type="text"  formControlName="changeName" class="form-control" id="changeName" >
+          </div>
 
         </div>
         <div class="modal-footer">
