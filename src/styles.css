@@ -9,19 +9,25 @@
 
 .filter-container{
   padding: 10px;
-  /*background: #f8f9fa;
-  -webkit-box-shadow: -1px 0px 5px 0px rgba(0,0,0,0.75);
-  -moz-box-shadow: -1px 0px 5px 0px rgba(0,0,0,0.75);
-  box-shadow: -1px 0px 5px 0px rgba(0,0,0,0.75);*/
   margin-top: 20px;
 }
 
 .trashButtonIcon{
   width: auto;
   margin: auto;
-  background: red;
+  background: #b03636;
   color: #ffffff;
   border: 0;
+}
+
+.danger-alert{
+  color: red;
+  padding: 5px;
+}
+
+.custom-link{
+  cursor: pointer;
+  color: #06689c;
 }
 
 .trashButtonIcon:focus{
@@ -36,7 +42,13 @@
   background: #00a7ff;
   color: #ffffff;
 }
-
+.my-iframe{
+  width: 100%;
+  min-height: 600px;
+  border: 1px #cbcbcb solid;
+  border-radius: 5px;
+  margin-top: 20px;
+}
 #main-table tr th{
   color:#7f7f7f;
   font-weight: normal;

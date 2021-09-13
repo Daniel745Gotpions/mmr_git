@@ -22,7 +22,7 @@ export class DisplayChangeComponent implements OnInit {
   margeRequests = []
   iframeUel;
   showList = false;
-
+  displayError = false;
   myForm = this.fb.group({
     urlString: ['',Validators.required],
   });
@@ -35,18 +35,29 @@ export class DisplayChangeComponent implements OnInit {
         if(data.length){
           this.showList = true
             for (var i=0; i<data.length;i++){
-
                 data[i].fullUrl = data[i].mm_mrs_base_url.trim()+data[i].mm_mrs_group.trim()+'/'+data[i].mm_mrs_num;
                 this.margeRequests.push(data[i]);
             }
           }
       });
-
     });
-
   }
 
   onSubmit(){
+
+    if( !this.myForm.get('urlString').value || !this.isValidURL(this.myForm.get('urlString').value)){
+      this.displayError = true;
+      return false;
+    }
+
+    this.displayError = false;
+    this.margeRequests.push({
+      mm_changes_id:'-1',
+      fullUrl:this.myForm.get('urlString').value
+    });
+
+    this.myForm.get('urlString').setValue('');
+    document.getElementById('exampleModal').click();
 
   }
 
@@ -54,6 +65,11 @@ export class DisplayChangeComponent implements OnInit {
     this.requestId = requestId;
     ($('#confirmModal') as any).modal('show');
   }
+
+  isValidURL(string) {
+    var res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+    return (res !== null)
+  };
 
   onDeleteChange(){
     if(this.margeRequests.length){
@@ -66,10 +82,9 @@ export class DisplayChangeComponent implements OnInit {
     document.getElementById('confirmModal').click();
   }
 
-  getIframe(){
-    if(this.iframeUel =='')
-      return ;
-    return this.sanitizer.bypassSecurityTrustResourceUrl(this.iframeUel);
+  setIframe(url){
+    //https://gitlab-master.nvidia.com/nbu-sws/p4/nv_p4compiler/-/merge_requests/618
+    this.iframeUel = this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
 }
