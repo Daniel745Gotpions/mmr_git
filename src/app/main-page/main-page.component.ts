@@ -22,7 +22,7 @@ export class MainPageComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
   itemList:Changes[] = [];
   projectList = [{"mm_project_name":"Select Project","mm_project_id":""}];
-
+  deleteId:number = 0;
 
   constructor(private changesLogicService:ChangesLogicService,private fb: FormBuilder,private http:HttpClient,private chRef:ChangeDetectorRef) {}
 
@@ -37,7 +37,6 @@ export class MainPageComponent implements OnInit {
     });
 
   }
-
 
   ngOnInit(): void {
 
@@ -121,6 +120,26 @@ export class MainPageComponent implements OnInit {
         });
     }
 
+  }
+
+  // Show Confirmation alert
+  deleteChangeAlert(deleteId){
+    this.deleteId = parseInt(deleteId);
+    ($('#confirmModal') as any).modal('show');
+  }
+
+  onDeleteChange(){
+
+      if (this.itemList.length){
+          for (let i = 0 ; i< this.itemList.length;i++){
+            if( this.itemList[i].changeId == this.deleteId ){
+              this.itemList.splice(i, 1);
+            }
+          }
+      }
+      // Call API to remove item from DB
+      this.rerender();
+      document.getElementById('confirmModal').click();
   }
 
   rerender(){

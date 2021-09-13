@@ -1,19 +1,20 @@
 
 <div class="filter-container">
-  <i class="bi bi-star-fill"></i>
-  <div class="row">
+
+  <div class="row jumbotron">
+
     <div class="col-lg-2">
       <span class="filter-title">Changes</span>
     </div>
+
     <div class="col-10 col-lg-10">
       <form>
         <div class="form-row">
           <div class="col-md-4 mb-4"></div>
           <div class="col-md-4 mb-4 text-right"></div>
           <div class="col-md-4 mb-4 text-right">
-            <!--<a routerLink="/create-change" class="btn-success btn">Create</a>-->
-            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-              Create
+            <button type="button" class="btn box-shadow-input" data-toggle="modal" data-target="#exampleModal">
+              Create <i class="bi bi-plus-lg" style="font-size: 14px;"></i>
             </button>
           </div>
         </div>
@@ -23,12 +24,11 @@
 
   <div class="row">
     <div class="col-lg-12">
-
-      <table datatable  [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover" >
+      <table datatable  [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover" id="main-table" >
         <thead>
         <tr>
           <th>Change ID <i class="fa fa-sort"></i> </th>
-          <th>Change Name <i class="fa fa-sort"></i> </th>
+          <th>Description <i class="fa fa-sort"></i> </th>
           <th>Project Name <i class="fa fa-sort"></i></th>
           <th>Status <i class="fa fa-sort"></i></th>
           <th>Action <i class="fa fa-sort"></i></th>
@@ -40,7 +40,8 @@
             <td> <a routerLink="display-change/{{item.changeId }}">{{item.description}}</a></td>
             <td>{{item.projectName}}</td>
             <td>{{item.statusDescription}}</td>
-            <td><i class="bi bi-trash"></i></td>
+            <td>
+              <button (click)="deleteChangeAlert(item.changeId)" class="form-control trashButtonIcon"><i class="bi bi-trash"></i></button>
           </tr>
         </tbody>
       </table>
@@ -76,6 +77,31 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <button type="submit" class="btn btn-primary" [disabled]="!myForm.valid">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmModalLabel">Confirmation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+        <div class="modal-body" style="color: red;font-size: 18px;">
+            This action will remove the change and all request belong to it,
+            Are you sure you want to continue?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary"data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-danger" (click)="onDeleteChange()">Delete</button>
         </div>
       </form>
     </div>
