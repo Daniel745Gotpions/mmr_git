@@ -46,10 +46,20 @@ export class ChangesLogicService {
     return this.http.post<any>(this.apiUrl+'/putNewChange.php',jsonData);
   }
 
+  // Add new request
+  addRequest(jsonData){
+    return this.http.post<any>(this.apiUrl+'/putNewRequest.php',jsonData);
+  }
+
   // Delete request by id
   deleteMmrById(mmrId){
     mmrId = parseInt(mmrId);
     return this.http.get(this.apiUrl+'/deleteRequestById.php?mm_mrs_id='+mmrId );
   }
 
+  // Get project list
+  editChange(jsonData){
+    return this.http.post(this.apiUrl+'/editChange.php', jsonData );
+
+  }
 }

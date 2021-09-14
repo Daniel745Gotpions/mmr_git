@@ -22,7 +22,7 @@
               <form>
                 <div class="form-group">
                     <label>Status:</label>
-                    <select class="form-control" >
+                    <select class="form-control" (change)="onStatusChange($event)" >
                       <option *ngFor="let v of statusList" value="{{v.mm_states_id}}" [selected]="v.mm_states_id === changeStatusId" >{{v.mm_states_name}}</option>
                     </select>
                 </div>

@@ -45,7 +45,6 @@ export class DisplayChangeComponent implements OnInit {
           this.projectName = data.mm_project.mm_project_name;
           this.changeStatusId = data.mm_states_id
         }
-
       });
 
       // Get open request per change
@@ -68,6 +67,22 @@ export class DisplayChangeComponent implements OnInit {
     });
   }
 
+  // Handle change status
+  onStatusChange(event){
+
+    this.changeStatusId = parseInt( event.target.value);
+    let json = {
+      mm_states_id:this.changeStatusId,
+      mm_changes_id:this.changeId
+    }
+
+    this.changesLogicService.editChange(JSON.stringify(json)).subscribe((data:any)=>{
+      debugger
+    });
+
+  }
+
+  // Create new request
   onSubmit(){
 
     if( !this.myForm.get('urlString').value || !this.isValidURL(this.myForm.get('urlString').value)){
@@ -75,14 +90,32 @@ export class DisplayChangeComponent implements OnInit {
       return false;
     }
 
-    this.displayError = false;
-    this.margeRequests.push({
-      mm_changes_id:'-1',
-      fullUrl:this.myForm.get('urlString').value
-    });
+    let fullUrl = this.myForm.get('urlString').value
+    let splitUrl = fullUrl.split('/');
+    let splitByDomain = fullUrl.split('nvidia.com');
+    let  v = splitByDomain[1].slice(1,splitByDomain[1].length)
 
-    this.myForm.get('urlString').setValue('');
-    document.getElementById('exampleModal').click();
+    let json =  {
+      mm_changes_id:this.changeId,
+      mm_mrs_base_url:'https://gitlab-master.nvidia.com/',
+      mm_mrs_group:v.slice(0,v.lastIndexOf('/')).trim(),
+      mm_mrs_num:parseInt(splitUrl[splitUrl.length-1]),
+      mm_mrs_group_full_url:this.myForm.get('urlString').value.trim()
+    }
+
+
+    this.changesLogicService.addRequest(JSON.stringify(json)).subscribe((data:any)=>{
+
+      // Hide error in case is active
+      this.displayError = false;
+      // Reset input field
+      this.myForm.get('urlString').setValue('');
+      // Close model
+      document.getElementById('exampleModal').click();
+      // Create new instance of request
+      data.fullUrl = data.mm_mrs_base_url.trim()+data.mm_mrs_group.trim()+'/'+data.mm_mrs_num;
+      this.margeRequests.push(data);
+    });
 
   }
 
@@ -101,7 +134,7 @@ export class DisplayChangeComponent implements OnInit {
 
     // Get open request per change
     this.changesLogicService.deleteMmrById(this.requestId).subscribe((data:any[])=>{
-      debugger
+
       if(this.margeRequests.length){
         for (let i= 0 ; i< this.margeRequests.length;i++){
           if(this.margeRequests[i].mm_mrs_id == this.requestId){
