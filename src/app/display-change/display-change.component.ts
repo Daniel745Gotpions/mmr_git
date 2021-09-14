@@ -18,12 +18,16 @@ export class DisplayChangeComponent implements OnInit {
 
   requestId:number;
   changeId:number;
-  changeStatus:number;
-  changeDetails = [];
+  changeStatusId:number;
+  description:string;
+  projectName :string;
+  statusList = [];
+
   margeRequests = []
   iframeUel;
   showList = false;
   displayError = false;
+
   myForm = this.fb.group({
     urlString: ['',Validators.required],
   });
@@ -32,6 +36,19 @@ export class DisplayChangeComponent implements OnInit {
 
     this.route.paramMap.subscribe(params => {
       this.changeId = parseInt(params.get('id'));
+
+      // Get all change details
+      this.changesLogicService.getMargeById(this.changeId).subscribe((data:any)=>{
+
+        if(data != null){
+          this.description = data.mm_desc;
+          this.projectName = data.mm_project.mm_project_name;
+          this.changeStatusId = data.mm_states_id
+        }
+
+      });
+
+      // Get open request per change
       this.changesLogicService.getRequestByMargeId(this.changeId).subscribe((data:any[])=>{
         if(data.length){
           this.showList = true
@@ -41,6 +58,12 @@ export class DisplayChangeComponent implements OnInit {
             }
           }
       });
+
+      // Get status list
+      this.changesLogicService.getStatusList().subscribe((data:any[])=>{
+        this.statusList = data;
+      });
+
     });
   }
 

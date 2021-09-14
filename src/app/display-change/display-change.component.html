@@ -11,20 +11,24 @@
               <span class="font-weight-bold">{{changeId}}</span>
             </div>
             <div class="col-lg-2">
+              <label>Description:</label>
+              <input type="text" class="form-control" disabled  value="{{description}}">
+            </div>
+            <div class="col-lg-2">
+              <label>Project Name:</label>
+              <input type="text" class="form-control" disabled value="{{projectName}}">
+            </div>
+            <div class="col-lg-2">
               <form>
                 <div class="form-group">
                     <label>Status:</label>
                     <select class="form-control" >
-                      <option value="1">Open</option>
-                      <option value="3">Done</option>
-                      <option value="2">Canceled</option>
+                      <option *ngFor="let v of statusList" value="{{v.mm_states_id}}" [selected]="v.mm_states_id === changeStatusId" >{{v.mm_states_name}}</option>
                     </select>
                 </div>
               </form>
             </div>
-            <div class="col-lg-5">
-
-            </div>
+            <div class="col-lg-1"></div>
             <div class="col-lg-3">
               <button type="button" class="btn box-shadow-input" style="margin-top: 30px;margin-right: 5px;" data-toggle="modal" data-target="#exampleModal">
                 Create Request <i class="bi bi-plus-lg" style="font-size: 14px;"></i>

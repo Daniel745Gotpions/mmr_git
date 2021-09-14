@@ -14,8 +14,17 @@ export class ChangesLogicService {
 
   apiUrl = "https://bi-new.mellanox.com/mmrServer";
 
+  getStatusList(){
+    return this.http.get(this.apiUrl+'/getStatusList.php');
+  }
+
   getItems() {
     return this.http.get(this.apiUrl+'/getChangeList.php');
+  }
+
+  getMargeById(changeId){
+    changeId = parseInt(changeId);
+    return this.http.get(this.apiUrl+"/getChangeById.php?mm_changes_id="+changeId);
   }
 
   getRequestByMargeId(changeId){
