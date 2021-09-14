@@ -50,6 +50,7 @@ export class DisplayChangeComponent implements OnInit {
 
       // Get open request per change
       this.changesLogicService.getRequestByMargeId(this.changeId).subscribe((data:any[])=>{
+
         if(data.length){
           this.showList = true
             for (var i=0; i<data.length;i++){
@@ -95,15 +96,22 @@ export class DisplayChangeComponent implements OnInit {
     return (res !== null)
   };
 
+  // Delete request
   onDeleteChange(){
-    if(this.margeRequests.length){
-      for (let i= 0 ; i< this.margeRequests.length;i++){
-        if(this.margeRequests[i].mm_mrs_id == this.requestId){
-          this.margeRequests.splice(i, 1);
+
+    // Get open request per change
+    this.changesLogicService.deleteMmrById(this.requestId).subscribe((data:any[])=>{
+      debugger
+      if(this.margeRequests.length){
+        for (let i= 0 ; i< this.margeRequests.length;i++){
+          if(this.margeRequests[i].mm_mrs_id == this.requestId){
+            this.margeRequests.splice(i, 1);
+          }
         }
       }
-    }
-    document.getElementById('confirmModal').click();
+      document.getElementById('confirmModal').click();
+    });
+
   }
 
   setIframe(url){
