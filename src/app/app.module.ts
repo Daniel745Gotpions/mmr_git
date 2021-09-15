@@ -13,12 +13,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DataTablesModule } from "angular-datatables";
 import { AppRoutingModule } from './app-routing.module';
 
-
-
 import { DisplayChangeComponent } from './display-change/display-change.component';
 import { CreateChangeComponent } from './create-change/create-change.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import {OrderModule} from "ngx-order-pipe";
+
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -34,7 +34,7 @@ import {OrderModule} from "ngx-order-pipe";
     HttpClientModule,
     AppRoutingModule,
     Ng2SearchPipeModule,
- //   Ng2OrderModule,
+    NgbModule,
     NgxPaginationModule,
     ReactiveFormsModule,
     FormsModule,

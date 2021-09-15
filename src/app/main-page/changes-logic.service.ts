@@ -62,4 +62,11 @@ export class ChangesLogicService {
     return this.http.post(this.apiUrl+'/editChange.php', jsonData );
 
   }
+
+  // Delete Change
+  deleteChangeById(changeId){
+    changeId = parseInt(changeId);
+    return this.http.get(this.apiUrl+'/deleteChange.php?mm_changes_id='+changeId );
+
+  }
 }

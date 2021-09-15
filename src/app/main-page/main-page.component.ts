@@ -129,17 +129,18 @@ export class MainPageComponent implements OnInit {
   }
 
   onDeleteChange(){
-
-      if (this.itemList.length){
+      this.changesLogicService.deleteChangeById(this.deleteId).subscribe((data:any)=>{
+        if (this.itemList.length){
           for (let i = 0 ; i< this.itemList.length;i++){
             if( this.itemList[i].changeId == this.deleteId ){
               this.itemList.splice(i, 1);
             }
           }
-      }
-      // Call API to remove item from DB
-      this.rerender();
-      document.getElementById('confirmModal').click();
+        }
+        // Call API to remove item from DB
+        this.rerender();
+        document.getElementById('confirmModal').click();
+      });
   }
 
   rerender(){
