@@ -22,17 +22,76 @@ export class DisplayChangeComponent implements OnInit {
   description:string;
   projectName :string;
   statusList = [];
-
+  projectList = [];
   margeRequests = []
   iframeUel;
   showList = false;
   displayError = false;
 
+  editActiveClassAction = 'bi bi-pencil-fill';
+  editActiveTitleAction = 'Edit Change Details';
+  editActiveIndex = 0;
+  disableInput = true;
+
+  defaultIcon = [
+    {
+      action:'edit',
+      class:'bi bi-pencil-fill',
+      title:'Edit Change Details',
+      disable:true
+    },
+    {
+      action:'apply',
+      class:'bi bi-caret-right-fill',
+      title:'Apply Action',
+      disable:false
+    }
+  ]
+
   myForm = this.fb.group({
     urlString: ['',Validators.required],
   });
 
+  changeDetails = this.fb.group({
+    statusInput: ['',Validators.required],
+    projectInput: ['',Validators.required],
+    descriptionInput: ['',Validators.required],
+    mm_changes_id:['',Validators.required]
+  });
+
+  // Handle edit form
+  changeEditAction(index:number){
+    index = (index == 0 )?1:0;
+    this.editActiveClassAction = this.defaultIcon[index].class;
+    this.editActiveTitleAction = this.defaultIcon[index].title;
+    this.editActiveIndex = index;
+    this.disableInput = this.defaultIcon[index].disable;
+    if(index == 1){
+      this.changeDetails.controls.statusInput.enable();
+      this.changeDetails.controls.projectInput.enable();
+      this.changeDetails.controls.descriptionInput.enable();
+    }else{
+      // Call API to update change
+      this.changesLogicService.editChange(JSON.stringify(this.changeDetails.value)).subscribe((data:any)=>{});
+      this.changeDetails.controls.statusInput.disable();
+      this.changeDetails.controls.projectInput.disable();
+      this.changeDetails.controls.descriptionInput.disable();
+    }
+
+  }
+
+
+
   ngOnInit(): void {
+
+    // Get project list
+    this.changesLogicService.getProjectList().subscribe((response:any[])=>{
+      if(response.length){
+        for (let i = 0; i < response.length; i++) {
+          this.projectList.push( response[i]);
+        }
+      }
+    });
 
     this.route.paramMap.subscribe(params => {
       this.changeId = parseInt(params.get('id'));
@@ -44,6 +103,17 @@ export class DisplayChangeComponent implements OnInit {
           this.description = data.mm_desc;
           this.projectName = data.mm_project.mm_project_name;
           this.changeStatusId = data.mm_states_id
+
+          // Set default values from DB
+          this.changeDetails.controls.statusInput.setValue(data.mm_states_id);
+          this.changeDetails.controls.projectInput.setValue(data.mm_project_id);
+          this.changeDetails.controls.descriptionInput.setValue(data.mm_desc);
+          this.changeDetails.controls.mm_changes_id.setValue(this.changeId);
+
+          // Disabled all the inputs by default
+          this.changeDetails.controls.descriptionInput.disable();
+          this.changeDetails.controls.statusInput.disable();
+          this.changeDetails.controls.projectInput.disable();
         }
       });
 
@@ -68,19 +138,15 @@ export class DisplayChangeComponent implements OnInit {
   }
 
   // Handle change status
-  onStatusChange(event){
+ /* onStatusChange(event){
 
     this.changeStatusId = parseInt( event.target.value);
     let json = {
       mm_states_id:this.changeStatusId,
       mm_changes_id:this.changeId
     }
-
-    this.changesLogicService.editChange(JSON.stringify(json)).subscribe((data:any)=>{
-      debugger
-    });
-
-  }
+    this.changesLogicService.editChange(JSON.stringify(json)).subscribe((data:any)=>{});
+  }*/
 
   // Create new request
   onSubmit(){

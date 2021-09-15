@@ -4,38 +4,47 @@
       <div class="col-lg-12">
         <p class="mini-title mt-4">Change Details</p>
         <div class="cube">
-
+          <form [formGroup]="changeDetails">
           <div class="row">
             <div class="col-lg-2" style="font-size: 20px;padding-top: 25px; vertical-align: middle;text-align: left">
               <label >Change ID :</label>
               <span class="font-weight-bold">{{changeId}}</span>
             </div>
-            <div class="col-lg-2">
-              <label>Description:</label>
-              <input type="text" class="form-control" disabled  value="{{description}}">
-            </div>
-            <div class="col-lg-2">
-              <label>Project Name:</label>
-              <input type="text" class="form-control" disabled value="{{projectName}}">
-            </div>
-            <div class="col-lg-2">
-              <form>
-                <div class="form-group">
-                    <label>Status:</label>
-                    <select class="form-control" (change)="onStatusChange($event)" >
-                      <option *ngFor="let v of statusList" value="{{v.mm_states_id}}" [selected]="v.mm_states_id === changeStatusId" >{{v.mm_states_name}}</option>
-                    </select>
-                </div>
-              </form>
-            </div>
-            <div class="col-lg-1"></div>
-            <div class="col-lg-3">
+
+              <div class="col-lg-2">
+                <label>Description:</label>
+                <input type="text" class="form-control" id="descriptionInput" formControlName="descriptionInput">
+              </div>
+              <div class="col-lg-2">
+                <label>Project Name:</label>
+                <select class="form-control" formControlName="projectInput" id="projectInput">
+                  <option *ngFor="let v of projectList" value="{{v.mm_project_id}}"  >{{v.mm_project_name}}</option>
+                </select>
+              </div>
+              <div class="col-lg-2">
+
+                  <div class="form-group">
+                      <label>Status:</label>
+                      <select class="form-control" formControlName="statusInput" id="statusInput">
+                        <option *ngFor="let v of statusList" value="{{v.mm_states_id}}"  >{{v.mm_states_name}}</option>
+                      </select>
+                  </div>
+              </div>
+
+            <div class="col-lg-4">
               <button type="button" class="btn box-shadow-input" style="margin-top: 30px;margin-right: 5px;" data-toggle="modal" data-target="#exampleModal">
                 Create Request <i class="bi bi-plus-lg" style="font-size: 14px;"></i>
               </button>
-              <a routerLink="/" class="btn box-shadow-input" style="margin-top: 30px;"><i class="bi bi-arrow-return-left" ></i></a>
+
+              <button type="button" class="btn box-shadow-input" style="margin-top: 30px;margin-right: 5px;" (click)="changeEditAction(editActiveIndex)" >
+
+                <span [ngClass]="editActiveClassAction" title="{{editActiveTitleAction}}"></span>
+              </button>
+
+              <a routerLink="/" class="btn box-shadow-input" style="margin-top: 30px;" title="Go Back"><i class="bi bi-arrow-return-left" ></i></a>
             </div>
           </div>
+          </form>
         </div>
       </div>
 
