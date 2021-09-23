@@ -1,0 +1,29 @@
+[33mcommit 7b42796166a73449970f5eb8209f676417c5d051[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mchange-middle-api-path[m[33m)[m
+Author: Daniel Berkovich <danielbe@mellanox.com>
+Date:   Sun Sep 19 13:37:32 2021 +0300
+
+    changed base url for api
+
+[33mcommit de971fcfbbfe37ff68f89795147ba1f1bcb2af33[m
+Author: Daniel Berkovich <danielbe@mellanox.com>
+Date:   Sun Sep 19 13:17:27 2021 +0300
+
+    changed path
+
+[33mcommit c60eaaa5b37d26be52651ecd22e8de9fbc506d45[m
+Author: Daniel Berkovich <danielbe@mellanox.com>
+Date:   Sun Sep 19 12:57:13 2021 +0300
+
+    changed path to API
+
+[33mcommit cb5ba52bdd8c5c25ca6b72d50c8cc2e658ecd81d[m[33m ([m[1;32mmy-new-test[m[33m)[m
+Author: Daniel Berkovich <danielbe@mellanox.com>
+Date:   Sun Sep 19 12:41:27 2021 +0300
+
+    added space
+
+[33mcommit bb4f99830c93905fa3d1ccefee3e428a4db03d6a[m[33m ([m[1;32mthird-branch[m[33m)[m
+Author: Shai Azulay <shaiaz@nvidia.com>
+Date:   Sun Sep 19 11:12:50 2021 +0300
+
+    Initial commit
